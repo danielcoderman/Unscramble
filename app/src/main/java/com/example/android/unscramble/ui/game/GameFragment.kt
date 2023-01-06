@@ -19,10 +19,12 @@ package com.example.android.unscramble.ui.game
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,7 +33,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
  * Fragment where the game is played, contains the game logic.
  */
 class GameFragment : Fragment() {
-    // My code
     init {
         Log.d("GameFragment", "GameFragment created")
     }
@@ -44,11 +45,6 @@ class GameFragment : Fragment() {
     // Create a ViewModel the first time the fragment is created.
     // If the fragment is re-created, it receives the same GameViewModel instance created by the
     // first fragment
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +60,9 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Setup Menu
+        setupMenu()
+
         binding.gameViewModel = sharedViewModel
         binding.maxNoOfWords = MAX_NO_OF_WORDS
         // Specify the fragment view as the lifecycle owner of the binding.
@@ -74,25 +73,29 @@ class GameFragment : Fragment() {
         binding.skip.setOnClickListener { onSkipWord() }
     }
 
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.layout_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle item selection
+                return when (menuItem.itemId) {
+                    R.id.action_high_score -> {
+                        val action = GameFragmentDirections.actionGameFragment2ToGameHighScoreFragment()
+                        findNavController().navigate(action)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner)
+    }
+
     override fun onDetach() {
         super.onDetach()
         Log.d("GameFragment", "GameFragment destroyed!")
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.layout_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.action_high_score -> {
-                // TODO: write code here that switches to fragment to shows the high score
-                Log.d("GameFragment", "high score icon selected from menu")
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     /*

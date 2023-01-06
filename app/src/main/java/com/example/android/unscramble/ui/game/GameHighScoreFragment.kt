@@ -1,60 +1,51 @@
 package com.example.android.unscramble.ui.game
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.example.android.unscramble.R
+import com.example.android.unscramble.databinding.GameHighScoreFragmentBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [GameHighScoreFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameHighScoreFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    init {
+        Log.d("GameHighScoreFragment", "GameHighScoreFragment created")
     }
+
+    private val sharedViewModel: GameViewModel by activityViewModels()
+
+    // Binding object instance with access to the views in the fragment_game_high_score.xml layout
+    private lateinit var binding: GameHighScoreFragmentBinding
+
+    // Create a ViewModel the first time the fragment is created.
+    // If the fragment is re-created, it receives the same GameViewModel instance created by the
+    // first fragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game_high_score, container, false)
+    ): View {
+        // Inflate the layout XML file and return a binding object instance
+        binding = DataBindingUtil.inflate(inflater, R.layout.game_high_score_fragment, container, false)
+        Log.d("GameHighScoreFragment", "GameHighScoreFragment View created/re-created!")
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment GameHighScoreFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GameHighScoreFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.gameViewModel = sharedViewModel
+        // Specify the fragment view as the lifecycle owner of the binding.
+        // This is used so that the binding can observe LiveData updates
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("GameHighScoreFragment", "GameHighScoreFragment destroyed!")
     }
 }

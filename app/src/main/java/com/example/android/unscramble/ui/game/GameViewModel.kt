@@ -1,15 +1,14 @@
 package com.example.android.unscramble.ui.game
 
+import android.app.Application
+import android.content.Context
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TtsSpan
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 
-class GameViewModel : ViewModel() {
+class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun getNextWord() {
         currentWord = allWordsList.random()
@@ -30,7 +29,20 @@ class GameViewModel : ViewModel() {
 
     private fun increaseScore() {
         _score.value = _score.value?.plus(SCORE_INCREASE)
+        // if score is greater than high score update high score
+        if (_score.value!! > _highScore.value!!) {
+            _highScore.value = _score.value
+
+            // save new high score value locally on android phone
+            _sharedPref.edit().putInt(HIGH_SCORE_SP_KEY, _highScore.value!!).apply()
+        }
     }
+
+    private val _sharedPref = getApplication<Application>().getSharedPreferences(SHARED_PREFERENCE_FILE, Context.MODE_PRIVATE)
+
+    private val _highScore = MutableLiveData(_sharedPref.getInt(HIGH_SCORE_SP_KEY, 0))
+    val highScore: LiveData<Int>
+        get() = _highScore
 
     private val _score = MutableLiveData(0)
     val score: LiveData<Int>

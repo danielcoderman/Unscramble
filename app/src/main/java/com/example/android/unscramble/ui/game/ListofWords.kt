@@ -17,8 +17,10 @@
 package com.example.android.unscramble.ui.game
 
 
-const val MAX_NO_OF_WORDS = 10
+const val MAX_NO_OF_WORDS = 50
 const val SCORE_INCREASE = 20
+const val SHARED_PREFERENCE_FILE = "com.example.android.unscramble.PREFERENCE_FILE"
+const val HIGH_SCORE_SP_KEY = "HIGH_SCORE"
 
 // List with all the words for the Game
 val allWordsList: List<String> =
