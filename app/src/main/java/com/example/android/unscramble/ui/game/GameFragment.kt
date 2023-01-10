@@ -27,7 +27,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Fragment where the game is played, contains the game logic.
@@ -99,11 +98,11 @@ class GameFragment : Fragment() {
     }
 
     /*
-            * Checks the user's word, and updates the score accordingly.
-            * Displays the next scrambled word.
-            */
+    * Checks the user's word, and updates the score accordingly.
+    * Displays the next scrambled word.
+    */
     private fun onSubmitWord() {
-        val playerWord = binding.textInputEditText.text.toString()
+        val playerWord = binding.textInputEditText.text.toString().trimEnd() // trimEnd() removes trailing whitespace
 
         if (sharedViewModel.isUserWordCorrect(playerWord)) {
             setErrorTextField(false)
@@ -128,25 +127,9 @@ class GameFragment : Fragment() {
     }
 
     /*
-     * Re-initializes the data in the ViewModel and updates the views with the new data, to
-     * restart the game.
-     */
-    private fun restartGame() {
-        sharedViewModel.reinitializeData()
-        setErrorTextField(false)
-    }
-
-    /*
-     * Exits the game.
-     */
-    private fun exitGame() {
-        activity?.finish()
-    }
-
-    /*
     * Sets and resets the text field error status.
     */
-    private fun setErrorTextField(error: Boolean) {
+    fun setErrorTextField(error: Boolean) {
         if (error) {
             binding.textField.isErrorEnabled = true
             binding.textField.error = getString(R.string.try_again)
@@ -160,12 +143,9 @@ class GameFragment : Fragment() {
     * Creates and shows an AlertDialog with the final score.
     */
     private fun showFinalScoreDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.congratulations))
-            .setMessage(getString(R.string.you_scored, sharedViewModel.score.value))
-            .setCancelable(false)
-            .setNegativeButton(getString(R.string.exit)) {_, _ -> exitGame()}
-            .setPositiveButton(getString(R.string.play_again)) {_, _ -> restartGame()}
-            .show()
+        val dialog = FinalScoreDialogFragment()
+        dialog.show(childFragmentManager, FinalScoreDialogFragment.TAG)
     }
+
+    // TODO: Make UI More Appealing (Wheat around high score and bigger text for unscramble in app bar when screen is horizontal)
 }
