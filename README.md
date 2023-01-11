@@ -18,7 +18,7 @@ Just for some background, the highscore functionality was added after I showed m
 * MenuProvider
 * SharedPreferences
 
-## High Overview of Structure
+## High Overview of the Structure
 The android architectural principle I'm using is driving the UI from a model.
 ### FinalScoreDialogFragment.kt
 * Responsible for displaying and handling the dialog whenever its requested to do so, for example, when the player finishes the game.
