@@ -23,4 +23,13 @@
         <item name="errorIconDrawable">@drawable/ic_error</item>
         <item name="helperTextTextAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
     </style>
+
+    <!--  styles for action bar -->
+    <style name="MyActionBar" parent="@style/Widget.MaterialComponents.ActionBar.PrimarySurface">
+        <item name="titleTextStyle">@style/MyTitleTextStyle</item>
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textSize">20sp</item> <!-- Default for portrait is 20sp and for landscape 14sp-->
+    </style>
 </resources>
