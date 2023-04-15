@@ -55,3 +55,10 @@ To fix this issue I simply used the Kotlin trimEnd function to remove the traili
 * Instead of using the shared view model in order for GameHighScoreFragment to get the high score data, the navigation component should be used to have GameFragment pass the high score as an argument to GameHighScoreFragment. From what I see, GameHighScoreFragment doesn't need a reference to the shared view model.
 * Give the player the ability to change the number of scrambled words given in the game
 * Give the player the option to have a countdown timer for each displayed scrambled word
+
+## Screenshots
+![Alt text](/../screenshots/UnscrambleScreenshots1.png?raw=true)
+![Alt text](/../screenshots/UnscrambleScreenshots2.png?raw=true)
+![Alt text](/../screenshots/UnscrambleScreenshots3.png?raw=true)
+![Alt text](/../screenshots/UnscrambleScreenshots4.png?raw=true)
+![Alt text](/../screenshots/UnscrambleScreenshots5.png?raw=true)
