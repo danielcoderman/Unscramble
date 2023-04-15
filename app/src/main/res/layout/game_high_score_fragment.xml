@@ -20,11 +20,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{String.valueOf(gameViewModel.highScore)}"
-            tools:text="77"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="77" />
+
+        <TextView
+            android:id="@+id/text_high_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/word_high_score"
+            android:textAppearance="@style/MyHighScoreWordTextStyle"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewRightWheat"
+            app:layout_constraintStart_toEndOf="@+id/imageViewLeftWheat"
+            app:layout_constraintTop_toBottomOf="@+id/high_score"
+            tools:text="High Score" />
+
+        <ImageView
+            android:id="@+id/imageViewLeftWheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/high_score"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_left_wheat"
+            android:contentDescription="@null" />
+
+        <ImageView
+            android:id="@+id/imageViewRightWheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/high_score"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_right_wheat"
+            android:contentDescription="@null" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

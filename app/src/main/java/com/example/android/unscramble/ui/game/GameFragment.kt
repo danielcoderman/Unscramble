@@ -147,5 +147,5 @@ class GameFragment : Fragment() {
         dialog.show(childFragmentManager, FinalScoreDialogFragment.TAG)
     }
 
-    // TODO: Make UI More Appealing (Wheat around high score and bigger text for unscramble in app bar when screen is horizontal)
+    // TODO: Make UI More Appealing (Wheat around high score)
 }
